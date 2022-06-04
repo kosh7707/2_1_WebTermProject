@@ -1,0 +1,16 @@
+#button1 {
+    width: 200px;
+    height: 100px;
+}
+
+.even {
+    color: gray;
+}
+
+.rising {
+    color: red;
+}
+
+.fall {
+    color: blue;
+}
