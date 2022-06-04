@@ -4,6 +4,8 @@ const port = 3000
 
 app.use(express.static('public'))
 
+app.use(express.static('image'))
+
 // http://localhost:3000 으로 접속시 /Home.html로 redirect 시켜줍니다.
 app.get('/', (req, res) => res.redirect('/Home.html'))
 

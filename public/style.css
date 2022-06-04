@@ -1,16 +1,106 @@
-#button1 {
-    width: 200px;
-    height: 100px;
+body {
+    background-color: gray;
+    margin: 0;
+    padding: 0;
 }
 
-.even {
+#wrapper {
+    text-align: center;
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 60px;
+}
+
+#wrapper>div {
+    display: block;
+    background-color: white;
+    margin: 30px auto;
+    height: 1400px;
+    width: 1400px;
+}
+
+#wrapper::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+#section1 {
+    width: 900px;
+    padding-top: 100px;
+    float: left;
+}
+
+#section2 {
+    width: 400px;
+    padding-top: 100px;
+    display: block;
+    float: right;
+}
+
+footer {
+    background-color: #26DFB2;
+    height: 60px;
+    position: relative;
+    transform: translateY(-100% + 60px);
+}
+
+footer>p {
+    text-align: center;
+    margin: 10px;
     color: gray;
 }
 
-.rising {
-    color: red;
+.price_board {
+    display: inline-block;
+    margin: auto;
 }
 
-.fall {
-    color: blue;
+.price_board.even {
+    color: #333;
 }
+
+.price_board.rise {
+    color: #c84a31;
+}
+
+.price_board.fall {
+    color: #1261c4;
+}
+
+.price_board span {
+    display: block;
+}
+
+.price_board span strong {
+    display: inline-block;
+}
+
+.price_board span.first strong {
+    font-size: 32px;
+}
+
+.price_board span.first em {
+    font-size: 14px;
+}
+
+.price_board span.second p {
+    color: gray;
+    font-size: 11px;
+    display: inline-block;
+    margin-right: 14px;
+}
+
+.price_board span.second .updown {
+    margin-left: 6px;
+    padding-left: 14px;
+}
+
+.price_board.rise span.second .updown {
+    background: url("icon_up.png") 0 no-repeat;
+}
+
+.price_board.fall span.second .updown {
+    background: url("icon_down.png") 0 no-repeat;
+}
+
