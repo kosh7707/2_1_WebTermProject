@@ -199,7 +199,21 @@ footer>p {
     display: inline-block;
 }
 
-#section4 > input[type=button] {
+#news_form {
+    width: inherit;
+    height: 50px;
+}
+
+#news_form > select {
+    float: right;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+}
+
+#news_form > input[type=button] {
     float: right;
     margin-right: 20px;
     margin-bottom: 15px;
@@ -207,7 +221,7 @@ footer>p {
     height: 40px;
 }
 
-#section4 > input[type=button]::after {
+#news_form > input[type=button]::after {
     display: block;
     content: "";
     clear: both;
@@ -218,17 +232,47 @@ footer>p {
     text-align: center;
     border-collapse: collapse;
     line-height: 50px;
-    border-top: 1px solid;
-    border-bottom: 1px solid;
     margin-left: 20px;
+    font-size: 20px;
 }
 
-#table2 > thead > tr > th {
-    border-bottom: 1px solid;
+#table2 th {
+    border: 1px solid;
+}
+
+#table2 tr td {
+    border: 1px solid;
 }
 
 #table2 > thead > tr > th:nth-child(2) {
-    width: 1000px;
+    width: 1200px;
+}
+
+#table2 a {
+    text-align: left;
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    padding-left: 30px;
+    height: 50px;
+    text-decoration: none;
+}
+
+#table2 a:visited {
+    color: blue;
+}
+
+#table2 a:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+#table2 span {
+    text-align: left;
+    display: block;
+    padding-left: 40px;
+    line-height: 30px;
+    font-size: 16px;
 }
 
 

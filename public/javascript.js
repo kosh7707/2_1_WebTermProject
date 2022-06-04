@@ -1,11 +1,6 @@
-// 헉!
-$("#button1").click(function() {
-    console.log("헉!");
-
-});
-
-// 전역변수 설정 
+// 전역변수 설정 upbit
 var upbitchange = new XMLHttpRequest();
+upbitchange.withCredentials = true;
 var trade_price = 0.0; 
 var high_price = 0.0; 
 var low_price = 0.0; 
@@ -16,13 +11,13 @@ var change_rate = 0.0;
 var signed_change_price = 0.0;
 var signed_change_rate = 0.0;
 
-// 사이트 접속 시 최초실행 
-$(document).ready(function() {
-    UpdateCurrentStatus();
-});
+// 전역변수 설정 naver
+var naverchange = new XMLHttpRequest();
+naverchange.withCredentials = true;
+var count = 1;
+var news = "";
 
-// upbit api호출 부분
-upbitchange.withCredentials = true;
+// 업비트 api호출 부분
 upbitchange.addEventListener("readystatechange", function() {
     if (this.readyState == 4) {
         var BTCinfo = JSON.parse(this.responseText)[0];
@@ -75,9 +70,60 @@ function UpdateCurrentStatus() {
     url = "http://localhost:3000/upbit";
     upbitchange.open("GET", url);
     upbitchange.send();
-    UpdateCurrentPriceBoard();
+    upbitchange.onload = UpdateCurrentPriceBoard();
 }
 setInterval(UpdateCurrentStatus, 1000);
 
+// 네이버 api 호출 부분
+naverchange.addEventListener("readystatechange", function() {
+    if(this.readyState === 4) {
+        news = JSON.parse(this.responseText).items;
+    }
+});
 
+$(document).ready(function() {
+    UpdateCurrentStatus();
+    
+    // 네이버 뉴스 이전 가져오기
+    $("#news_next_button").click(function() {
+        let url = "http://localhost:3000/naver?";
+        let start = count;
+        let display = $("#news_form > select :selected").text();
+        url += "start=" + start + "&display=" + display;
+        naverchange.open("GET", url);
+        naverchange.send();
+        naverchange.onload = function() {
+            let table2 = document.getElementById("table2");
+            table2.innerHTML = "<table id=table2><thead><tr><th>번호</th><th>내용</th></tr></thead></table>";
+            for (i in news) {
+                var num = parseInt(count) + parseInt(i);
+                console.log("title: " + news[i].title);
+                console.log("description: " + news[i].description);
+                table2.innerHTML += "<tr><td>" + num + "</td><td><a href='" + news[i].link + "' target='_blank'>" + news[i].title + "</a><span>" + news[i].description + "</span></td></tr>"
+            }
+            count += parseInt(display);
+        }
+    });
 
+    $("#news_prev_button").click(function() {
+        let url = "http://localhost:3000/naver?";
+        let display = $("#news_form > select :selected").text();
+        if (count - parseInt(display)*2 < 1) count = 1;
+        else count -= parseInt(display)*2;
+        let start = count;
+        url += "start=" + start + "&display=" + display;
+        naverchange.open("GET", url);
+        naverchange.send();
+        naverchange.onload = function() {
+            let table2 = document.getElementById("table2");
+            table2.innerHTML = "<table id=table2><thead><tr><th>번호</th><th>내용</th></tr></thead></table>";
+            for (i in news) {
+                var num = parseInt(count) + parseInt(i);
+                console.log("title: " + news[i].title);
+                console.log("description: " + news[i].description);
+                table2.innerHTML += "<tr><td>" + num + "</td><td><a href='" + news[i].link + "' target='_blank'>" + news[i].title + "</a><span>" + news[i].description + "</span></td></tr>"
+            }
+            count += parseInt(display);
+        }
+    });
+});
