@@ -11,22 +11,75 @@
             <div>
                 <section id="section1">
                     <div class="even price_board">
-                    <span class="first">
-                        <strong>000000000</strong>
-                        <em>KRW</em>
-                    </span>
-                    <span class="second">
-                        <p>전일대비</p>
-                        <strong>0.000</strong>
-                        <strong class="updown">000000</strong>
-                    </span>
+                        <span class="first">
+                            <strong>000000000</strong>
+                            <em>KRW</em>
+                        </span>
+                        <span class="second">
+                            <p>전일대비</p>
+                            <strong>0.000</strong>
+                            <strong class="updown">000000</strong>
+                        </span>
                     </div>
                 </section>
                 <section id="section2">
                     <div>
+                        <dt>
+                            <strong>가격</strong>
+                        </dt>
+                        <dd>
+                            <input type="text" id="price" placeholder="가격">
+                        </dd>
+                        <dt>
+                            <strong>크기</strong>
+                        </dt>
+                        <dd>
+                            <input type="text" id="size" placeholder="크기">
+                        </dd>
+                    </div>
+                    <div>
                         <input type="button" id="buy_button" value="매수/Buy">
                         <input type="button" id="sell_button" value="매도/Sell">
                     </div>
+                </section>
+                <section id="section3">
+                    <table id="table1">
+                        <thead>
+                            <tr>
+                                <th>포지션</th>
+                                <th>진입 가격</th>
+                                <th>청산 가격</th>
+                                <th>레버리지</th>
+                                <th>PNL(ROE %)</th>
+                                <th>포지션 종료</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </section>
+                <section id="section4">
+                    <form >
+
+                    </form>
+                    <datalist>
+                        <option>5개</option>
+                        <option>10개</option>
+                        <option>25개</option>
+                    </datalist>
+                    <input type="button" id="news_prev_button" value="다음뉴스 가져오기">
+                    <input type="button" id="news_next_button" value="이전뉴스 가져오기">
+                    <table>
+                        <table id="table2">
+                            <thead>
+                                <tr>
+                                    <th>뉴스 제목</th>
+                                    <th>내용</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                    </table>
+
                 </section>
             </div>
         </div>

@@ -15,8 +15,8 @@ body {
     display: block;
     background-color: white;
     margin: 30px auto;
-    height: 1400px;
-    width: 1400px;
+    height: 1500px;
+    width: 1300px;
 }
 
 #wrapper::after {
@@ -26,16 +26,20 @@ body {
 }
 
 #section1 {
-    width: 900px;
+    width: 880px;
+    height: 300px;
     padding-top: 100px;
+    display: block;
     float: left;
 }
 
 #section2 {
     width: 400px;
+    height: 300px;
     padding-top: 100px;
     display: block;
     float: right;
+    padding-right: 20px;
 }
 
 footer {
@@ -103,4 +107,128 @@ footer>p {
 .price_board.fall span.second .updown {
     background: url("icon_down.png") 0 no-repeat;
 }
+
+#section2>div dt {
+    float: left;
+    padding: 0;
+    margin: 0;
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 10px;
+}
+
+#section2>div dd {
+    float: right;
+    padding: 0;
+    margin: 0;
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    margin-bottom: 10px;
+}
+
+#section2>div input[type=text] {
+    width: inherit;
+    height: inherit;
+}
+
+#section2>div input[type=button] {
+    margin-top: 20px;
+    width: 195px;
+    height: 50px;
+}
+
+#buy_button {
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(14, 203, 129);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+#buy_button:hover {
+    background-color: rgb(50, 217, 147);
+    cursor: pointer;
+}
+#buy_button:active {
+    background-color: rgb(14, 203, 129);
+    cursor: pointer;
+}
+
+#sell_button {
+    border-radius: 10px;
+    border: 0;
+    background-color: rgb(246, 70, 93);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+#sell_button:hover {
+    background-color: rgb(255, 112, 126);
+    cursor: pointer;
+}
+#sell_button:active {
+    background-color: rgb(246, 70, 93);
+    cursor: pointer;
+}
+
+#section3 {
+    width: inherit;
+    height: 300px;
+    display: inline-block;
+}
+
+#table1{
+    width: 1260px;
+    text-align: center;
+    border-collapse: collapse;
+    line-height: 50px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-left: 20px;
+}
+
+#table1 > thead > tr > th {
+    border-bottom: 1px solid;
+}
+
+#section4 {
+    width: inherit;
+    height: 500px;
+    display: inline-block;
+}
+
+#section4 > input[type=button] {
+    float: right;
+    margin-right: 20px;
+    margin-bottom: 15px;
+    width: 150px;
+    height: 40px;
+}
+
+#section4 > input[type=button]::after {
+    display: block;
+    content: "";
+    clear: both;
+}
+
+#table2 {
+    width: 1260px;
+    text-align: center;
+    border-collapse: collapse;
+    line-height: 50px;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    margin-left: 20px;
+}
+
+#table2 > thead > tr > th {
+    border-bottom: 1px solid;
+}
+
+#table2 > thead > tr > th:nth-child(2) {
+    width: 1000px;
+}
+
 
