@@ -15,7 +15,7 @@ app.get('/upbit', function(req,res){
     var request = require('request');
     var options = {
         'method': 'GET',
-        'url': 'https://api.upbit.com/v1/ticker?markets=KRW-BTC',
+        'url': 'https://api.upbit.com/v1/ticker?markets=KRW-SBD',
     };
     request(options, function (error, response) { 
         if (error) throw new Error(error);
