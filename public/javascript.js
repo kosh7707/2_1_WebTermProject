@@ -49,8 +49,6 @@ upbitchange.addEventListener("readystatechange", function() {
     }
 });
 
-// position_info = [position, execution, reverage, size, price, PNL, ROE, liquidation_price]
-
 // 현재상태를 1초마다 업데이트
 function UpdateCurrentStatus() {
     url = "http://localhost:3000/upbit";
@@ -95,14 +93,23 @@ function gameStart() {
         die_count = 0;
         localStorage.setItem("WebTermProject_money", money);
         localStorage.setItem("WebTermProject_die_count", die_count);
+        $("nav").addClass("qkdrmt");
     }
     else {
         money = localStorage.getItem("WebTermProject_money");
         die_count = localStorage.getItem("WebTermProject_die_count");
+        if (money < 100000000 && money > 10000) {
+            $("nav").addClass("tmfvj");
+        } else if (money <= 10000) {
+            $("nav").addClass("wo");
+        } else {
+            $("nav").addClass("qkdrmt");
+        }
     }
     $("#money > span").text(Number(money).toLocaleString('ko-KR'));
 }
 
+// position_info = [position, execution, reverage, size, price, PNL, ROE, liquidation_price]
 // 포지션 정보 업데이트
 function UpdatePositionInfo() {
     if (!position_info[1]) {
@@ -126,7 +133,9 @@ function UpdatePositionInfo() {
         position_info[6] = position_info[5]/position_info[4]/position_info[3];
         position_info[7] = (1+position_info[2])/position_info[2] * position_info[4];
     }
-
+    if (position_info[6] <= -1) {
+        close_position();
+    }
 }
 
 // 포지션 table 업데이트
@@ -145,8 +154,6 @@ function UpdatePositionTable() {
         + position_info[7].toLocaleString('ko-KR') + "</td><td>" + position_info[3] + "</td><td>"
         + PNL_ROE + "</td><td>" + "<input type='button' id='close_button' value='포지션 종료'>" + "</td></tr>";
     $("#close_button").click(function() {
-        let table1 = document.getElementById("table1");
-        table1.deleteRow(-1);
         close_position();
     });
     if (position_info[5] > 0) {
@@ -165,11 +172,14 @@ function UpdatePositionTable() {
 
 // 포지션 종료
 function close_position() {
+    let table1 = document.getElementById("table1");
+    table1.deleteRow(-1);
     if (!position_info[1]) {
         money += position_info[3] * position_info[4];
     } else {
         money += position_info[3] * position_info[4] + position_info[5];
     }
+    if (money < 0) money = 0;
     localStorage.setItem("WebTermProject_money", money);
     $("#money > span").text(Number(money).toLocaleString('ko-KR'));
     position_info = [];
@@ -275,8 +285,6 @@ $(document).ready(function() {
                         + liquidation_price + "</td><td>" + size + "</td><td>"
                         + PNL_ROE + "</td><td>" + "<input type='button' id='close_button' value='포지션 종료'>" + "</td></tr>";
         $("#close_button").click(function() {
-            let table1 = document.getElementById("table1");
-            table1.deleteRow(-1);
             close_position();
         });
 
