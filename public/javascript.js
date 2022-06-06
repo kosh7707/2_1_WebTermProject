@@ -106,10 +106,15 @@ function gameStart() {
             $("nav").addClass("qkdrmt");
         }
     }
+    if (money < 0) {
+        money = 0;
+        money = localStorage.getItem("WebTermProject_money");
+    }
     $("#money > span").text(Number(money).toLocaleString('ko-KR'));
 }
 
 // position_info = [position, execution, reverage, size, price, PNL, ROE, liquidation_price]
+//                      0       1           2        3      4    5    6         7
 // 포지션 정보 업데이트
 function UpdatePositionInfo() {
     if (!position_info[1]) {
@@ -124,13 +129,13 @@ function UpdatePositionInfo() {
         else return;
     }
     if (position_info[0] == "long") {
-        position_info[5] = (trade_price - position_info[4])*position_info[2] * position_info[3]; // PNL
-        position_info[6] = position_info[5]/position_info[4]/position_info[3]; // ROE
+        position_info[5] = (trade_price - position_info[4])*position_info[2]*position_info[3]; // PNL
+        position_info[6] = position_info[5]/position_info[4]/position_info[3]*position_info[2]; // ROE
         position_info[7] = (-1+position_info[2])/position_info[2] * position_info[4]; // liquidation_price
     }
     else {
-        position_info[5] = (-1) * (trade_price - position_info[4])*position_info[2] * position_info[3];
-        position_info[6] = position_info[5]/position_info[4]/position_info[3];
+        position_info[5] = (-1) * (trade_price - position_info[4])*position_info[2]*position_info[3];
+        position_info[6] = position_info[5]/position_info[4]/position_info[3]*position_info[2];
         position_info[7] = (1+position_info[2])/position_info[2] * position_info[4];
     }
     if (position_info[6] <= -1) {
@@ -212,7 +217,7 @@ function PriceAndSizeValidationCheck() {
         alert("레버리지는 1~50 사이의 숫자만 입력해 주세요.");
         return false;
     }
-    if (price * coin_count * reverage > money) {
+    if (price * coin_count > money) {
         alert("소지금이 부족합니다");
         return false;
     }
@@ -294,7 +299,7 @@ $(document).ready(function() {
         position_info.push(size);
         position_info.push(price);
 
-        money -= price * size;
+        money -= price * coin_count;
         localStorage.setItem("WebTermProject_money", money);
         $("#money > span").text(Number(money).toLocaleString('ko-KR'));
     });
