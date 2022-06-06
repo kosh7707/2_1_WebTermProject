@@ -11,7 +11,6 @@ var change_rate = 0.0;
 var signed_change_price = 0.0;
 var signed_change_rate = 0.0;
 var money = 0;
-var die_count = 0;
 var position_info = [];
 
 // 전역변수 설정 naver
@@ -88,16 +87,14 @@ naverchange.addEventListener("readystatechange", function() {
 
 // 게임 시작시 정보 로딩 부분
 function gameStart() {
-    if (localStorage.getItem("WebTermProject_money") == null) {
+    money = Number(localStorage.getItem("WebTermProject_money"));
+    if (money == null) {
         money = 100000000;
-        die_count = 0;
         localStorage.setItem("WebTermProject_money", money);
-        localStorage.setItem("WebTermProject_die_count", die_count);
         $("nav").addClass("qkdrmt");
     }
     else {
         money = localStorage.getItem("WebTermProject_money");
-        die_count = localStorage.getItem("WebTermProject_die_count");
         if (money < 100000000 && money > 10000) {
             $("nav").addClass("tmfvj");
         } else if (money <= 10000) {
@@ -106,11 +103,15 @@ function gameStart() {
             $("nav").addClass("qkdrmt");
         }
     }
-    if (money < 0) {
+    if (Number(money) < 0) {
         money = 0;
-        money = localStorage.getItem("WebTermProject_money");
+        money = localStorage.setItem("WebTermProject_money", money);
+        $("#money > span").text("0".toLocaleString('ko-KR'));
     }
-    $("#money > span").text(Number(money).toLocaleString('ko-KR'));
+    else {
+        $("#money > span").text(Number(money).toLocaleString('ko-KR'));
+    }
+    
 }
 
 // position_info = [position, execution, reverage, size, price, PNL, ROE, liquidation_price]
@@ -129,13 +130,13 @@ function UpdatePositionInfo() {
         else return;
     }
     if (position_info[0] == "long") {
-        position_info[5] = (trade_price - position_info[4])*position_info[2]*position_info[3]; // PNL
-        position_info[6] = position_info[5]/position_info[4]/position_info[3]*position_info[2]; // ROE
+        position_info[5] = (trade_price - position_info[4])*position_info[3]; // PNL
+        position_info[6] = (trade_price - position_info[4])/position_info[4]*position_info[3]; // ROE
         position_info[7] = (-1+position_info[2])/position_info[2] * position_info[4]; // liquidation_price
     }
     else {
-        position_info[5] = (-1) * (trade_price - position_info[4])*position_info[2]*position_info[3];
-        position_info[6] = position_info[5]/position_info[4]/position_info[3]*position_info[2];
+        position_info[5] = (-1) * (trade_price - position_info[4])*position_info[3];
+        position_info[6] = (-1) * (trade_price - position_info[4])/position_info[4]*position_info[3];
         position_info[7] = (1+position_info[2])/position_info[2] * position_info[4];
     }
     if (position_info[6] <= -1) {
@@ -175,14 +176,16 @@ function UpdatePositionTable() {
     }
 }
 
+// position_info = [position, execution, reverage, size, price, PNL, ROE, liquidation_price]
+//                      0       1           2        3      4    5    6         7
 // 포지션 종료
 function close_position() {
     let table1 = document.getElementById("table1");
     table1.deleteRow(-1);
     if (!position_info[1]) {
-        money += position_info[3] * position_info[4];
+        money += position_info[4]*position_info[3]/position_info[2];
     } else {
-        money += position_info[3] * position_info[4] + position_info[5];
+        money += position_info[4]*position_info[3]/position_info[2] + position_info[5];
     }
     if (money < 0) money = 0;
     localStorage.setItem("WebTermProject_money", money);
@@ -336,7 +339,7 @@ $(document).ready(function() {
         position_info.push(size);
         position_info.push(price);
 
-        money -= price * size;
+        money -= price * coin_count;
         localStorage.setItem("WebTermProject_money", money);
         $("#money > span").text(Number(money).toLocaleString('ko-KR'));
     });
